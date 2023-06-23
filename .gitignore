@@ -52,3 +52,6 @@ Mkfile.old
 dkms.conf
 
 **.DS_Store
+**/__pycache__
+**__pycache__.py
+**./idea

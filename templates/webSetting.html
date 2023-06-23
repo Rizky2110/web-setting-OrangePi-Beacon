@@ -1,0 +1,216 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    
+    <title>Beacon Web Setting</title>
+    <link rel="stylesheet" type="text/css" href="{{ url_for('static', filename='css/style.css') }}">
+    <link type="json" href="{{ url_for('static', filename='data/data.json') }}">
+    <script>
+      function disableTxt() {
+        document.getElementById('SSID').disabled = true
+        document.getElementById('PASSWORD').disabled = true
+      }
+
+      function undisableTxt() {
+        document.getElementById('SSID').disabled = false
+        document.getElementById('PASSWORD').disabled = false
+      }
+
+      window.onload = () => {
+        document.getElementById('SSID').disabled = false
+        document.getElementById('PASSWORD').disabled = true
+
+        // document.getElementById('simcard').checked = false
+        // document.getElementById('wifi').checked = true
+      }
+      function update() {
+        var href = window.location.href
+        location.assign(href + 'update')
+      }
+
+      function back_home() {
+        var href = window.location.assign("/")
+      }
+
+    setTimeout(
+      function()
+      {
+        let url= window.location.assign('/process')
+      }, 15000);
+
+    </script>
+  </head>
+  <body>
+     <!-- tombol delete setting di pojok kanan -->
+    <div class="container-form">
+      <div class="delete">
+        <form action="/delete">
+          <button name="inputDelete" type="submit" value="Delete Setting">
+            <svg
+              xmlns="http://www.w3.org/2000/svg"
+              class="icon icon-tabler icon-tabler-trash"
+              width="32"
+              height="32"
+              viewBox="0 0 24 24"
+              stroke-width="2"
+              stroke="currentColor"
+              fill="none"
+              stroke-linecap="round"
+              stroke-linejoin="round"
+            >
+              <path stroke="none" d="M0 0h24v24H0z" fill="none"></path>
+              <path d="M4 7l16 0"></path>
+              <path d="M10 11l0 6"></path>
+              <path d="M14 11l0 6"></path>
+              <path d="M5 7l1 12a2 2 0 0 0 2 2h8a2 2 0 0 0 2 -2l1 -12"></path>
+              <path d="M9 7v-3a1 1 0 0 1 1 -1h4a1 1 0 0 1 1 1v3"></path>
+            </svg>
+          </button>
+        </form>
+      </div>
+      <!-- countainer beacon setting -->
+      <div class="container-header">
+        <h3 class="mac">BEACON SETTING</h3>
+        <p class="mac">MAC : <strong>{{MAC}}</strong></p>
+      </div>
+      <div class="container-login">
+        <!-- Form pemilihan koneksi dan isi SSID dan PASS-->
+        <form class="form" action="/formdata" method="post">
+          <h3>Connection :</h3>
+          {%if Connection == "WIFI" : %}
+          <label id="drive_radio"></label>
+          <input
+            type="radio"
+            id="wifi"
+            {{checked}}
+            name="connection"
+            value="WIFI"
+            onclick="undisableTxt()"
+            class="simcardradio"
+          />
+          <label for="wifi">WiFi</label>
+
+          <input
+          type="radio"
+          id="lan"
+          name="connection"
+          value="LAN"
+          onclick="disableTxt()"
+          class="simcardradio"
+          />
+          <label for="lan">LAN</label>
+
+          <input
+            type="radio"
+            id="WifiLAN"
+            name="connection"
+            value="WIFILAN"
+            class="simcardradio"
+            onclick="undisableTxt()"
+          />
+          <label for="WifiLAN">ALL</label>
+       
+          {%elif Connection == "LAN" :%}
+          
+          <input
+            type="radio"
+            id="wifi"
+            name="connection"
+            value="WIFI"
+            onclick="undisableTxt()"
+            class="simcardradio"
+          />
+          <label for="wifi">WiFi</label>
+          
+          <input
+            type="radio"
+            id="lan"
+            {{checked}}
+            name="connection"
+            value="LAN"
+            onclick="disableTxt()"
+            class="simcardradio"
+          />
+          <label for="lan">LAN</label>
+
+          <input
+            type="radio"
+            id="WifiLAN"
+            name="connection"
+            value="WIFILAN"
+            class="simcardradio"
+            onclick="undisableTxt()"
+          />
+          <label for="WifiLAN">ALL</label>
+
+          {%elif Connection == "WIFILAN" : 
+          %}
+          <input
+            type="radio"
+            id="wifi"
+            name="connection"
+            value="WIFI"
+            onclick="undisableTxt()"
+            class="simcardradio"
+          />
+          <label for="wifi">WiFi</label>
+          
+          <input
+            type="radio"
+            id="lan"
+            name="connection"
+            value="LAN"
+            onclick="disableTxt()"
+            class="simcardradio"
+          />
+          <label for="lan">LAN</label>
+
+          <input
+            type="radio"
+            id="WifiLAN"
+            {{checked}}
+            name="connection"
+            value="WIFILAN"
+            class="simcardradio"
+            onclick="undisableTxt()"
+          />
+          <label for="WifiLAN">ALL</label>
+          {%endif%}
+
+          <br />
+          <br />
+          <label for="SSID">SSID :</label>
+          <select id="SSID" name="inputSSID" >
+            {% for i in wifiList %}
+            <option value="{{i}}" selected="selected">{{i}}</option>
+            {%endfor%}
+            <option value="{{SSID}}" selected="selected">{{SSID}}</option>
+          </select>
+          <br />
+          <label for="PASSWORD">PASS :</label>
+          <input type="text" id="PASSWORD" value="{{PASS}}" name="inputPASS" placeholder="{{PASS}}" required />
+          <br />
+
+          <button class="submit" type= "submit" >Submit</button>
+
+          <br />
+          <!-- Status yang ditampilkan -->
+          <div class="information">
+            <p class="h3_label">Monitor (Checker) : <strong id="sig_test">{{RSSI}}</strong></p>
+            <hr></hr>
+            <p class="h3_label">Connection : <strong id="connection_test">{{Connection}}</strong></p>
+            <p class="h3_label">IP Address : <strong id="ip_test">{{IPAddress}}</strong></p>
+            <p class="h3_label">MQTT : <strong id="mqtt_test">{{MQTT}}</strong></p>
+            <hr></hr>
+            <p class="h3_label">Status : <strong id="status_test">{{Status}}</p>
+          </div>
+          
+        </form>
+      </div>
+
+    </div>
+  </body>
+</html>

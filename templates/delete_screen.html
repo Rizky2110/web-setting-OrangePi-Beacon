@@ -1,0 +1,37 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Submite Data</title>
+    <style>
+      /* input[type=submit], */
+      .button_back_home {
+        font-family: inherit;
+        border: none;
+        padding: 0.875rem 1rem;
+        background-color: green;
+        color: white;
+        font-weight: 500;
+        font-size: 1rem;
+        cursor: pointer;
+        border-radius: 8px;
+        margin-block-start: 0.75rem;
+      }
+
+      .button_back_home:hover {
+        background-color: #45a049;
+      }
+    </style>
+    <script>
+      function back_home() {
+        window.location.assign('/')
+      }
+    </script>
+  </head>
+  <body>
+    <h2>{{delete}}</h2>
+
+    <button class="button_back_home" onclick="back_home()">BACK TO HOME</button>
+  </body>
+</html>

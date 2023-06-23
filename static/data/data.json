@@ -1,0 +1,17 @@
+{
+    "MAC": "9C:9C:1F:C6:C4:55",
+    "wifiList": [
+        "i-connect | -80",
+        "wifiid | -50",
+        "limo | -60",
+        "rumahsakit | -40"
+    ],
+    "SSID": "i-connect | -50",
+    "PASS": "interadsjoss",
+    "RSSI": "-30",
+    "Connection": "WIFI",
+    "checked": "checked",
+    "IPAddress": "192.168.43.5",
+    "MQTT": "Connected",
+    "Status": "Data terkirim, Setup Selesai"
+}
